@@ -1,0 +1,160 @@
+/* Modern Healthcare-Inspired Global Styling */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-red: #e11d48;
+    --primary-red-hover: #be123c;
+    --primary-red-glow: rgba(225, 29, 72, 0.15);
+    --medical-white: #fcfdfe;
+    --text-slate: #0f172a;
+    --text-muted: #475569;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-slate);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Beautiful Animated Medical Gradient Background */
+.medical-bg {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 50%, #fef2f2 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Custom Grid Decorative Overlay */
+.grid-overlay {
+    background-image: radial-gradient(rgba(225, 29, 72, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* Perfect Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    border-color: rgba(225, 29, 72, 0.2);
+    box-shadow: 0 12px 40px 0 rgba(225, 29, 72, 0.06);
+    transform: translateY(-2px);
+}
+
+/* Active / Checked Card state */
+.symptom-card-active {
+    background: rgba(254, 242, 242, 0.9) !important;
+    border-color: rgba(225, 29, 72, 0.5) !important;
+    box-shadow: 0 10px 30px 0 rgba(225, 29, 72, 0.1) !important;
+}
+
+/* Double-Beat Animated Heartbeat (Feels realistic) */
+.heartbeat-icon {
+    animation: heartbeat 1.4s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.12); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.12); }
+    70% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+/* Pulse Animation for Emergency Banner Alerts */
+.emergency-pulse {
+    animation: emergencyGlow 2s infinite alternate;
+}
+
+@keyframes emergencyGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4), 0 0 0 2px rgba(225, 29, 72, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 20px 8px rgba(225, 29, 72, 0.15), 0 0 0 6px rgba(225, 29, 72, 0.05);
+    }
+}
+
+/* Shimmer Scanning Animation (For diagnositc transition) */
+.shimmer-line {
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(225, 29, 72, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    height: 4px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    animation: scanLine 2s infinite linear;
+}
+
+@keyframes scanLine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Dynamic Fade-in on Scroll / Load */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom Toggle Switch Colors */
+.checkbox-toggle:checked + .toggle-bg {
+    background-color: var(--primary-red);
+}
+
+/* Glow ring effect for buttons */
+.button-glow:hover {
+    box-shadow: 0 0 20px 4px rgba(225, 29, 72, 0.3);
+}
+
+/* Toast Notifications styling */
+.toast-success {
+    border-left: 4px solid #10b981;
+}
+
+.toast-error {
+    border-left: 4px solid #ef4444;
+}
+
+.toast-info {
+    border-left: 4px solid #3b82f6;
+}
+
+/* Heart rate wave svg animation */
+.wave-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawWave 4s linear infinite;
+}
+
+@keyframes drawWave {
+    to {
+        stroke-dashoffset: 0;
+    }
+}

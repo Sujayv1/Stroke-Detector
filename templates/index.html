@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Stroke Symptom Checker - A professional rule-based expert system that helps evaluate symptoms and raise critical awareness of stroke warning signs.">
+    <title>AI Stroke Symptom Checker | Rule-Based Expert System</title>
+    <!-- Tailwind CSS for rich modern spacing and styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom style sheet for advanced animations and overrides -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Font Awesome for clean, premium medical/clinical icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="medical-bg grid-overlay min-h-screen text-slate-900 selection:bg-rose-100 selection:text-medical-600">
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 w-full glass-card border-b border-rose-100/40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-medical-50 flex items-center justify-center border border-medical-200">
+                    <i class="fa-solid fa-heartbeat text-medical-600 text-xl heartbeat-icon"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight text-slate-800">Stroke<span class="text-medical-600">Checker</span></span>
+                    <span class="block text-[10px] text-slate-400 font-semibold tracking-wider uppercase">AI Expert System</span>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#assessment-section" class="hover:text-medical-600 transition-colors">Start Check</a>
+                <a href="#about-ai-section" class="hover:text-medical-600 transition-colors">How the AI Works</a>
+                <a href="#emergency-info" class="hover:text-medical-600 transition-colors">Emergency Signs</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    System Online
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Landing Section -->
+    <section class="relative pt-12 pb-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="lg:col-span-7 space-y-8 fade-in-up">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-medical-50 text-medical-700 border border-medical-100 text-sm font-medium">
+                        <i class="fa-solid fa-microchip text-medical-500"></i>
+                        <span>Rule-Based Expert Diagnostics</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+                        AI Stroke <br>
+                        <span class="bg-gradient-to-r from-medical-600 to-rose-500 bg-clip-text text-transparent">Symptom Checker</span>
+                    </h1>
+                    
+                    <p class="text-lg text-slate-600 leading-relaxed max-w-xl">
+                        An interactive medical expert system designed to help you quickly identify critical warning signs of a stroke. Uses clinical classification rules to assess risk metrics instantly.
+                    </p>
+
+                    <!-- Urgent Quick Notice -->
+                    <div class="p-4 rounded-2xl border-l-4 border-amber-500 bg-amber-50/50 backdrop-blur-md max-w-xl">
+                        <div class="flex gap-3">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg mt-0.5"></i>
+                            <div>
+                                <span class="font-bold text-amber-900 text-sm block">Remember the F.A.S.T. Protocol</span>
+                                <span class="text-xs text-amber-800 leading-normal block mt-0.5">
+                                    Face drooping, Arm weakness, Speech difficulty, Time to call emergency services. Act quickly!
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="#assessment-section" class="button-glow px-8 py-4 rounded-xl bg-medical-600 hover:bg-medical-700 text-white font-semibold transition-all duration-300 shadow-lg shadow-medical-600/20 flex items-center gap-2 group">
+                            Start Assessment
+                            <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                        <a href="#about-ai-section" class="px-6 py-4 rounded-xl border border-slate-200 bg-white/40 hover:bg-white text-slate-700 font-semibold transition-all duration-300">
+                            Learn AI Concept
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Visual: Heart rate wave & medical card -->
+                <div class="lg:col-span-5 relative flex justify-center items-center fade-in-up" style="animation-delay: 0.2s;">
+                    <!-- Pulse Aura Effect -->
+                    <div class="absolute -inset-10 bg-gradient-to-tr from-medical-500/10 to-rose-400/5 rounded-full blur-3xl opacity-60"></div>
+                    
+                    <div class="relative w-full max-w-md glass-card rounded-3xl p-8 border border-white/80 shadow-2xl">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-medical-50 flex items-center justify-center">
+                                    <i class="fa-solid fa-user-doctor text-medical-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-sm">System Status</h4>
+                                    <p class="text-xs text-emerald-600 font-medium">Ready for input</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-1 rounded-md">V1.0.0</span>
+                        </div>
+
+                        <!-- Pulse Wave Graph -->
+                        <div class="h-32 w-full bg-slate-950/95 rounded-2xl overflow-hidden relative border border-slate-800 shadow-inner flex items-center justify-center">
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="none">
+                                <path class="wave-path" d="M 0 50 L 50 50 L 60 30 L 70 70 L 80 50 L 130 50 L 140 10 L 150 90 L 160 50 L 210 50 L 220 30 L 230 70 L 240 50 L 300 50" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span class="absolute bottom-3 right-4 text-[10px] text-medical-500/80 font-mono tracking-wider animate-pulse"><i class="fa-solid fa-circle text-[6px] mr-1.5"></i>EKG MONITORING</span>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Response Rate</span>
+                                <span class="block text-2xl font-bold text-slate-800 mt-1">Instant</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                                <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">AI Logic</span>
+                                <span class="block text-2xl font-bold text-slate-800 mt-1">Rule-Based</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini info warning -->
+                        <p class="text-[11px] text-slate-400 leading-normal text-center mt-6">
+                            *Always consult immediate medical professionals if symptoms are critical.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Form Section -->
+    <section id="assessment-section" class="py-24 border-t border-slate-100 bg-white/40 backdrop-blur-sm relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase font-extrabold tracking-widest text-medical-600 bg-medical-50 px-3.5 py-1.5 rounded-full">Interactive Checklist</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Stroke Warning Signs Checklist</h2>
+                <p class="text-slate-600">
+                    Carefully review the symptoms below. Toggle each card if the symptom is observed in the patient or yourself.
+                </p>
+            </div>
+
+            <!-- Toast Container -->
+            <div id="toast-container" class="fixed top-24 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+            <form id="symptom-form" class="space-y-12">
+                <!-- Symptom Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Symptom 1: Face Drooping -->
+                    <div class="symptom-card glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden" data-symptom="face">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-medical-100">
+                                <i class="fa-solid fa-face-grimace text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Face Drooping</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                                Does one side of the face droop, feel numb, or look uneven when smiling?
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100/60 pt-4">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase status-label">No Symptom</span>
+                            <!-- Toggle switch -->
+                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full select-none cursor-pointer">
+                                <input type="checkbox" name="face" id="face" class="absolute block w-6 h-6 rounded-full bg-white border-2 border-slate-200 appearance-none cursor-pointer checked:right-0 right-6 checked:border-medical-600 transition-all duration-300 shadow" onclick="event.stopPropagation();">
+                                <label for="face" class="block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300 toggle-bg-label"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptom 2: Arm Weakness -->
+                    <div class="symptom-card glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden" data-symptom="arm">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-medical-100">
+                                <i class="fa-solid fa-child-reaching text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Arm Weakness</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                                Is one arm weak or numb? Ask the person to raise both arms. Does one drift downward?
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100/60 pt-4">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase status-label">No Symptom</span>
+                            <!-- Toggle switch -->
+                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full select-none cursor-pointer">
+                                <input type="checkbox" name="arm" id="arm" class="absolute block w-6 h-6 rounded-full bg-white border-2 border-slate-200 appearance-none cursor-pointer checked:right-0 right-6 checked:border-medical-600 transition-all duration-300 shadow" onclick="event.stopPropagation();">
+                                <label for="arm" class="block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300 toggle-bg-label"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptom 3: Speech Difficulty -->
+                    <div class="symptom-card glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden" data-symptom="speech">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-medical-100">
+                                <i class="fa-solid fa-comment-slash text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Speech Difficulty</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                                Is their speech slurred, hard to understand, or are they unable to find simple words?
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100/60 pt-4">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase status-label">No Symptom</span>
+                            <!-- Toggle switch -->
+                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full select-none cursor-pointer">
+                                <input type="checkbox" name="speech" id="speech" class="absolute block w-6 h-6 rounded-full bg-white border-2 border-slate-200 appearance-none cursor-pointer checked:right-0 right-6 checked:border-medical-600 transition-all duration-300 shadow" onclick="event.stopPropagation();">
+                                <label for="speech" class="block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300 toggle-bg-label"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptom 4: Sudden Confusion -->
+                    <div class="symptom-card glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden" data-symptom="confusion">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-medical-100">
+                                <i class="fa-solid fa-brain text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Sudden Confusion</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                                Is there trouble understanding conversations, mental fog, or disorientation?
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100/60 pt-4">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase status-label">No Symptom</span>
+                            <!-- Toggle switch -->
+                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full select-none cursor-pointer">
+                                <input type="checkbox" name="confusion" id="confusion" class="absolute block w-6 h-6 rounded-full bg-white border-2 border-slate-200 appearance-none cursor-pointer checked:right-0 right-6 checked:border-medical-600 transition-all duration-300 shadow" onclick="event.stopPropagation();">
+                                <label for="confusion" class="block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300 toggle-bg-label"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptom 5: Trouble Walking -->
+                    <div class="symptom-card glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden" data-symptom="walking">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-medical-100">
+                                <i class="fa-solid fa-person-walking text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Trouble Walking</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                                Do they have sudden difficulty walking, loss of balance, dizziness, or lack of coordination?
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100/60 pt-4">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase status-label">No Symptom</span>
+                            <!-- Toggle switch -->
+                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full select-none cursor-pointer">
+                                <input type="checkbox" name="walking" id="walking" class="absolute block w-6 h-6 rounded-full bg-white border-2 border-slate-200 appearance-none cursor-pointer checked:right-0 right-6 checked:border-medical-600 transition-all duration-300 shadow" onclick="event.stopPropagation();">
+                                <label for="walking" class="block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300 toggle-bg-label"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Symptom 6: Severe Headache -->
+                    <div class="symptom-card glass-card rounded-2xl p-6 flex flex-col justify-between cursor-pointer group relative overflow-hidden" data-symptom="headache">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-full pointer-events-none transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center mb-4 transition-transform group-hover:scale-105 border border-medical-100">
+                                <i class="fa-solid fa-head-side-virus text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-lg mb-2">Severe Headache</h3>
+                            <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                                Is there a sudden, severe, excruciating headache with no known medical cause or prompt explanation?
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-100/60 pt-4">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase status-label">No Symptom</span>
+                            <!-- Toggle switch -->
+                            <div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full select-none cursor-pointer">
+                                <input type="checkbox" name="headache" id="headache" class="absolute block w-6 h-6 rounded-full bg-white border-2 border-slate-200 appearance-none cursor-pointer checked:right-0 right-6 checked:border-medical-600 transition-all duration-300 shadow" onclick="event.stopPropagation();">
+                                <label for="headache" class="block overflow-hidden h-6 rounded-full bg-slate-200 cursor-pointer transition-colors duration-300 toggle-bg-label"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Form Controls & Actions -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <button type="submit" class="button-glow w-full sm:w-auto px-10 py-4 rounded-xl bg-medical-600 hover:bg-medical-700 text-white font-bold transition-all duration-300 shadow-lg shadow-medical-600/25 flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-stethoscope"></i>
+                        Analyze Checked Symptoms
+                    </button>
+                    <button type="button" id="reset-btn" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-slate-200 bg-white text-slate-600 font-semibold hover:bg-slate-50 hover:text-slate-800 transition-all duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        Reset Form
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loading & Scanning Diagnostics State -->
+            <div id="scanning-loader" class="hidden mt-16 max-w-xl mx-auto glass-card rounded-2xl p-8 border border-medical-200 relative overflow-hidden">
+                <div class="shimmer-line"></div>
+                <div class="flex flex-col items-center justify-center text-center space-y-4">
+                    <div class="w-16 h-16 rounded-full bg-medical-50 border border-medical-200 flex items-center justify-center relative">
+                        <i class="fa-solid fa-rotate text-medical-600 text-2xl animate-spin"></i>
+                        <i class="fa-solid fa-shield-halved text-medical-600 text-xs absolute"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-slate-800 text-lg">AI Diagnostic Scan Running</h3>
+                        <p class="text-slate-500 text-xs mt-1">Interpreting symptom pathways via expert rule system...</p>
+                    </div>
+                    
+                    <!-- Progress Log -->
+                    <div class="w-full bg-slate-50 rounded-xl p-3 border border-slate-100 font-mono text-[10px] text-slate-400 space-y-1 text-left">
+                        <div class="flex items-center gap-1.5 text-slate-500">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>Parsing endpoint payloads... OK</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-slate-500">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>Calculating cumulative risk weight matrix...</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-medical-500 animate-pulse">
+                            <span class="w-1.5 h-1.5 rounded-full bg-medical-500"></span>
+                            <span>Executing clinical IF-ELSE decision logic...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnostics Result Section -->
+            <div id="result-section" class="hidden mt-16 max-w-2xl mx-auto">
+                <!-- High Risk Alert (Aesthetic Danger Card) -->
+                <div id="result-high" class="hidden glass-card rounded-3xl p-8 border-2 border-rose-500 bg-gradient-to-br from-rose-50 to-white shadow-2xl relative overflow-hidden emergency-pulse">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-bl-full pointer-events-none"></div>
+                    <div class="flex flex-col items-center text-center space-y-6">
+                        <div class="w-16 h-16 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center border border-rose-200">
+                            <i class="fa-solid fa-triangle-exclamation text-2xl animate-bounce"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-rose-600 bg-rose-100 px-3 py-1 rounded-full"><i class="fa-solid fa-circle-exclamation mr-1.5"></i>Critical Attention Required</span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900" id="result-title-high">⚠ Possible Stroke Detected</h3>
+                            <p class="text-slate-600 text-sm max-w-md leading-relaxed" id="result-desc-high">
+                                Seek immediate medical attention. High stroke score registered from checked medical symptoms.
+                            </p>
+                        </div>
+
+                        <!-- Quick Emergency Button -->
+                        <a href="tel:911" class="button-glow w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-rose-600/30 text-base">
+                            <i class="fa-solid fa-phone-flip animate-pulse"></i>
+                            Call Emergency Services Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Medium Risk Card -->
+                <div id="result-medium" class="hidden glass-card rounded-3xl p-8 border border-amber-300 bg-gradient-to-br from-amber-50/50 to-white shadow-xl relative overflow-hidden">
+                    <div class="flex flex-col items-center text-center space-y-6">
+                        <div class="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center border border-amber-200">
+                            <i class="fa-solid fa-circle-info text-2xl"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-amber-700 bg-amber-100 px-3 py-1 rounded-full">Moderate Warning</span>
+                            <h3 class="text-2xl font-extrabold text-slate-900" id="result-title-medium">Some stroke-related symptoms detected</h3>
+                            <p class="text-slate-600 text-sm max-w-md leading-relaxed" id="result-desc-medium">
+                                Multiple potential warning indicators are present. Please monitor state tightly and consult with doctors immediately.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Low Risk Card -->
+                <div id="result-low" class="hidden glass-card rounded-3xl p-8 border border-emerald-300 bg-gradient-to-br from-emerald-50/40 to-white shadow-lg relative overflow-hidden">
+                    <div class="flex flex-col items-center text-center space-y-6">
+                        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center border border-emerald-200">
+                            <i class="fa-solid fa-circle-check text-2xl"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Low Risk Assessment</span>
+                            <h3 class="text-2xl font-extrabold text-slate-900" id="result-title-low">Low possibility of stroke</h3>
+                            <p class="text-slate-600 text-sm max-w-md leading-relaxed" id="result-desc-low">
+                                The symptom scores are reassuringly low. However, seek guidance immediately if conditions shift or feel atypical.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Summary List of Checked Symptoms -->
+                <div class="mt-8 glass-card rounded-2xl p-6 border border-slate-100 shadow-md">
+                    <h4 class="font-bold text-slate-800 text-sm mb-4"><i class="fa-solid fa-receipt mr-2 text-medical-600"></i>Assessment Breakdown Summary</h4>
+                    <div id="symptom-breakdown-container" class="space-y-2.5">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About AI Section -->
+    <section id="about-ai-section" class="py-24 border-t border-slate-100 relative bg-gradient-to-b from-white to-rose-50/20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-xs uppercase font-extrabold tracking-widest text-medical-600 bg-medical-50 px-3.5 py-1.5 rounded-full">AI Architecture</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Understanding Rule-Based Expert Systems</h2>
+                <p class="text-slate-600">
+                    Discover how classical diagnostic logic compares to contemporary machine learning frameworks.
+                </p>
+            </div>
+
+            <!-- Conceptual Comparison Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <!-- Card 1: Rule-Based Expert System -->
+                <div class="glass-card rounded-2xl p-8 border border-medical-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-medical-500/5 rounded-bl-full"></div>
+                    <div class="flex items-center gap-3.5 mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center border border-medical-100 shadow-sm">
+                            <i class="fa-solid fa-diagram-project text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Rule-Based Expert System</h3>
+                            <span class="text-[10px] text-medical-600 font-bold uppercase tracking-wider">IF-ELSE Logic Paradigm</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                        Expert systems utilize explicit clinical conditions written as strict programmatic logic. They are deterministic, highly transparent, easy to audit, and don't require training datasets. The logic follows a structured path modeled after human physician protocols (e.g. F.A.S.T.).
+                    </p>
+                    <ul class="space-y-2 text-xs text-slate-500">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i><span><strong>Decision Making</strong>: Structured boolean paths and weights.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i><span><strong>Classification</strong>: Exact thresholds determine severe warnings.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check-circle text-emerald-500 mt-0.5"></i><span><strong>Search Logic</strong>: Predictable, linear complexity mapping input fields.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Modern Machine Learning -->
+                <div class="glass-card rounded-2xl p-8 border border-slate-100 bg-white/40">
+                    <div class="flex items-center gap-3.5 mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center border border-slate-100 shadow-sm">
+                            <i class="fa-solid fa-network-wired text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Modern Machine Learning</h3>
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Probabilistic Weights</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                        Unlike expert systems, machine learning utilizes neural networks and statistical models that learn coefficients automatically from large amounts of historical patient records. They excel at recognizing hidden patterns in fuzzy data, but act as complex black-boxes that can be difficult to interpret mathematically.
+                    </p>
+                    <ul class="space-y-2 text-xs text-slate-500">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-slate-400 mt-0.5"></i><span><strong>Decision Making</strong>: Multi-dimensional layers of weights/biases.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-slate-400 mt-0.5"></i><span><strong>Classification</strong>: High-dimensional boundaries fit on huge curves.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-slate-400 mt-0.5"></i><span><strong>Search Logic</strong>: Complex mathematical gradient descent optimization.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Dynamic Decision Flowchart visual -->
+            <div class="glass-card rounded-3xl p-8 border border-slate-100 shadow-lg">
+                <h3 class="font-extrabold text-slate-800 text-base mb-8 text-center"><i class="fa-solid fa-route mr-2 text-medical-600"></i>Algorithm Flowchart: Inside the Expert System Logic</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center relative">
+                    <!-- Step 1: Input -->
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 text-center relative flex flex-col items-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm mb-3">1</div>
+                        <h4 class="font-bold text-slate-800 text-sm">Collect Input</h4>
+                        <p class="text-[11px] text-slate-400 mt-1">Symptom Boolean flags (Face, Arm, Speech, Confusion, Walking, Headache)</p>
+                    </div>
+
+                    <!-- Step 2: Scoring -->
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 text-center relative flex flex-col items-center">
+                        <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm mb-3">2</div>
+                        <h4 class="font-bold text-slate-800 text-sm">Calculate Score</h4>
+                        <p class="text-[11px] text-slate-400 mt-1">Iterate symptoms.<br>Add 1 for each positive "yes" response.</p>
+                    </div>
+
+                    <!-- Step 3: Decision Node -->
+                    <div class="p-5 rounded-2xl bg-medical-50/50 border border-medical-200 text-center relative flex flex-col items-center shadow-sm">
+                        <div class="w-10 h-10 rounded-full bg-medical-500 text-white flex items-center justify-center font-bold text-sm mb-3">3</div>
+                        <h4 class="font-bold text-slate-800 text-sm">Apply Boundaries</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 font-mono text-left w-full max-w-xs mx-auto">
+                            Score >= 4: Critical<br>
+                            Score >= 2: Moderate<br>
+                            Else: Low Risk
+                        </p>
+                    </div>
+
+                    <!-- Step 4: Result Output -->
+                    <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 text-center text-white relative flex flex-col items-center shadow-lg">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-sm mb-3">4</div>
+                        <h4 class="font-bold text-sm">Display Advice</h4>
+                        <p class="text-[11px] text-slate-400 mt-1">Present dynamic JSON feedback, medical alerts, and support steps.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clinical Emergency Info Section -->
+    <section id="emergency-info" class="py-20 border-t border-slate-100 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute -right-24 -bottom-24 w-96 h-96 bg-medical-600/5 rounded-full blur-3xl"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-8 space-y-6">
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-medical-500 bg-medical-950/80 px-3.5 py-1.5 rounded-full"><i class="fa-solid fa-phone-volume mr-1.5"></i>ACT FAST FOR STROKE</span>
+                    <h2 class="text-3xl font-extrabold tracking-tight">Know the F.A.S.T. Warning Checklist</h2>
+                    <p class="text-slate-300 text-sm leading-relaxed max-w-2xl">
+                        Time saved is brain saved. If you spot any of these sudden indicators, call emergency numbers instantly. Stroke treatments are most effective if given within the first few hours of initial symptoms.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div class="flex items-start gap-2.5">
+                            <span class="font-black text-medical-500 text-lg">F</span>
+                            <div>
+                                <span class="font-bold text-xs block text-slate-200">Face Drooping</span>
+                                <span class="text-[11px] text-slate-400 block mt-0.5">One side droops or feels numb.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="font-black text-medical-500 text-lg">A</span>
+                            <div>
+                                <span class="font-bold text-xs block text-slate-200">Arm Weakness</span>
+                                <span class="text-[11px] text-slate-400 block mt-0.5">One arm drifts downwards.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="font-black text-medical-500 text-lg">S</span>
+                            <div>
+                                <span class="font-bold text-xs block text-slate-200">Speech Difficulty</span>
+                                <span class="text-[11px] text-slate-400 block mt-0.5">Slurred speech, hard to understand.</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="font-black text-medical-500 text-lg">T</span>
+                            <div>
+                                <span class="font-bold text-xs block text-slate-200">Time to Call</span>
+                                <span class="text-[11px] text-slate-400 block mt-0.5">Dial 911 or local emergency services.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-4 flex justify-center">
+                    <div class="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md text-center space-y-4 max-w-[280px] w-full">
+                        <div class="w-12 h-12 rounded-full bg-medical-950/80 border border-medical-500 flex items-center justify-center mx-auto">
+                            <i class="fa-solid fa-clock-rotate-left text-medical-500 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-sm text-slate-200">Every Second Matters</h4>
+                            <p class="text-[11px] text-slate-400 mt-1">A stroke delays treatment options and increases neurological issues.</p>
+                        </div>
+                        <a href="tel:911" class="block w-full py-2.5 bg-medical-600 hover:bg-medical-700 text-white font-bold rounded-xl transition-all duration-300 text-xs uppercase tracking-wider">
+                            Call Emergency Support
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Area -->
+    <footer class="bg-slate-950 text-slate-500 border-t border-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex justify-center items-center gap-2">
+                <i class="fa-solid fa-heartbeat text-medical-500"></i>
+                <span class="text-slate-300 font-bold text-sm tracking-tight">AI Stroke Symptom Checker</span>
+            </div>
+            
+            <p class="text-xs max-w-md mx-auto leading-relaxed">
+                This rule-based AI Mini Project is designed as a student demonstration helper framework. Not intended for actual diagnostic clinical use.
+            </p>
+            
+            <div class="text-[10px] text-slate-600 uppercase tracking-widest font-semibold">
+                Project by Student | AI Mini Project | Python Flask & Tailwind CSS
+            </div>
+            
+            <p class="text-[10px] text-slate-700">
+                &copy; 2026 StrokeChecker AI Expert System. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Connect interactive script -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
