@@ -119,4 +119,4 @@ else:
 ---
 
 ## 🚨 Medical Disclaimer
-This software is an AI demonstration rule system for educational and training purposes. It is **not** a substitute for professional clinical diagnosis, advice, or treatment. If you or someone you are with exhibits symptoms of a stroke, please contact your local emergency services (e.g. **911** or **112**) immediately.
+This software is an AI demonstration rule system for educational and training purposes. It is **not** a substitute for professional clinical diagnosis, advice, or treatment. If you or someone you are with exhibits symptoms of a stroke, please contact your local emergency services (e.g. **108** or **112**) immediately.
